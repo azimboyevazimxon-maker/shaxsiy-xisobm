@@ -1,0 +1,2 @@
+# shaxsiy-xisobm
+ozimmi rasxodlarim 
