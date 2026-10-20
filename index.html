@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Xarajatlar</title>
+  <meta name="description" content="Shaxsiy xarajat, kirim, kopilka va qarzlar hisobi">
+  <meta name="theme-color" content="#16a34a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Xarajatlar">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="icon-btn" id="back-link" href="#/home" aria-label="Orqaga" hidden>‹</a>
+      <h1 id="page-title">Asosiy</h1>
+      <a class="icon-btn" id="settings-link" href="#/settings" aria-label="Sozlamalar">⚙️</a>
+    </header>
+
+    <main id="view" class="view"></main>
+
+    <nav class="tabbar" aria-label="Asosiy menyu">
+      <a class="tab" data-tab="home" href="#/home"><span class="tab-icon">🏠</span><span>Asosiy</span></a>
+      <a class="tab" data-tab="products" href="#/products"><span class="tab-icon">🛒</span><span>Mahsulot</span></a>
+      <a class="tab" data-tab="stats" href="#/stats"><span class="tab-icon">📊</span><span>Statistika</span></a>
+      <a class="tab" data-tab="savings" href="#/savings"><span class="tab-icon">🐷</span><span>Kopilka</span></a>
+      <a class="tab" data-tab="debts" href="#/debts"><span class="tab-icon">🤝</span><span>Qarz</span></a>
+    </nav>
+  </div>
+
+  <div id="sheet-root"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
