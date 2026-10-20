@@ -6,7 +6,7 @@ Ozimmi xarajatlarni hisoblash uchun PWA (progressive web app). Faqat HTML, CSS v
 
 | Bo'lim | Nima qiladi |
 |---|---|
-| **Asosiy** | Bugun / hafta / oy jami. Tezkor kiritish: `taksi 30000` yoki `5 ming taksi`. Summa yozilsa, "Mahsulot qilib saqlaymi?" deb so'raydi. Daromad qo'shish. |
+| **Asosiy** | Bugun / hafta / oy jami. Tezkor kiritish: `taksi 30000` yoki `5 ming taksi`. Summa yozilsa, "Mahsulot qilib saqlaymi?" deb so'raydi. Daromad qo'shish. Bugungi xarajatni ✎ bilan tahrirlash mumkin. |
 | **Mahsulotlar** | Nomi, narxi, kategoriyasi, joyi. Bosilsa darhol xarajatga qo'shiladi. Ushlab turilsa miqdor tanlanadi (masalan 6 000 so'mdan 5 ta). |
 | **Statistika** | Oy bo'yicha kirim, chiqim va `kirim - chiqim` farqi. Kategoriyalar bo'yicha diagramma. Oylar orasida o'tish. |
 | **Kopilka** | Maqsad (nomi va summa), qo'shilgan pullar, foiz va qolgani. Pullar haftalik guruhlab ko'rsatiladi. |
@@ -43,7 +43,7 @@ O'rnatilgandan keyin ilova internetsiz ham ochiladi (service worker qobiqni kesh
 
 - Hamma ma'lumot `localStorage`da, kalit: `xarajat-pwa:v1`. Ma'lumot faqat shu brauzer/qurilmada turadi.
 - Brauzer ma'lumotlarini tozalasangiz yoki boshqa telefonga o'tsangiz, **Sozlamalar → Eksport (JSON)** bilan zaxira oling va yangi joyda **Import** qiling.
-- Yangi versiya chiqarganda `sw.js` dagi `CACHE_VERSION` ni o'zgartiring — eski kesh tozalanadi.
+- Fayllar avval tarmoqdan olinadi, shuning uchun yangilanishlar darhol ko'rinadi. Internet bo'lmasa keshdagi nusxa ishlatiladi.
 
 ### Ma'lumot modeli
 

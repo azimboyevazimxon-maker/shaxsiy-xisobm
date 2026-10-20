@@ -1,6 +1,6 @@
 import { store } from '../store.js';
 import { ask, bindPress, el, field, openSheet, toast } from '../ui.js';
-import { categoryById } from '../categories.js';
+import { CATEGORIES, categoryById } from '../categories.js';
 import { parseQuickInput } from '../parser.js';
 import { dateKey, formatMoney, monthKey, sumBy, weekStartKey } from '../utils.js';
 import { openProductForm } from './products.js';
@@ -39,6 +39,61 @@ function openIncomeForm(onSaved) {
           field('Summa', amount),
           field('Sana', date),
           el('button', { class: 'btn btn-block', type: 'submit', text: 'Saqlash' }),
+        ),
+      );
+    },
+  });
+}
+
+function openExpenseForm(expense, onSaved) {
+  openSheet({
+    title: 'Xarajatni tahrirlash',
+    build(body, close) {
+      const name = el('input', { type: 'text', maxlength: '60', required: true, autocomplete: 'off', value: expense.name });
+      const amount = el('input', { type: 'number', inputmode: 'numeric', min: '0', step: 'any', required: true, value: expense.amount });
+      const category = el(
+        'select',
+        {},
+        CATEGORIES.map((item) => el('option', { value: item.id, text: item.name, selected: item.id === expense.category })),
+      );
+      const place = el('input', { type: 'text', maxlength: '60', autocomplete: 'off', value: expense.place ?? '' });
+      const date = el('input', { type: 'date', value: expense.date });
+
+      body.append(
+        el(
+          'form',
+          {
+            class: 'form',
+            onsubmit: async (event) => {
+              event.preventDefault();
+              const value = Number(amount.value);
+              if (!name.value.trim() || !(value > 0)) {
+                toast("Nomi va summasini to'g'ri kiriting");
+                return;
+              }
+              await store.update('expenses', expense.id, {
+                name: name.value.trim(),
+                amount: value,
+                category: category.value,
+                place: place.value.trim(),
+                date: date.value || expense.date,
+              });
+              close();
+              toast('Saqlandi');
+              onSaved();
+            },
+          },
+          field('Nomi', name),
+          field('Summa', amount),
+          field('Kategoriya', category),
+          field('Joyi', place),
+          field('Sana', date),
+          el(
+            'div',
+            { class: 'row-actions' },
+            el('button', { class: 'btn btn-ghost', type: 'button', onclick: close, text: 'Bekor' }),
+            el('button', { class: 'btn', type: 'submit', text: 'Saqlash' }),
+          ),
         ),
       );
     },
@@ -129,6 +184,7 @@ export async function render(root) {
         el('small', { class: 'muted', text: [category.name, expense.place].filter(Boolean).join(' · ') }),
       ),
       el('span', { class: 'amount', text: money(expense.amount) }),
+      el('button', { class: 'icon-btn small', type: 'button', 'aria-label': 'Tahrirlash', onclick: () => openExpenseForm(expense, rerender), text: '✎' }),
       el('button', { class: 'icon-btn small', type: 'button', 'aria-label': "O'chirish", onclick: () => remove(expense), text: '🗑' }),
     );
   }

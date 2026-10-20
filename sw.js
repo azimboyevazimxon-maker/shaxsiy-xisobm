@@ -1,5 +1,6 @@
 // Ilova qobig'ini keshlaydi, shuning uchun internetsiz ham ishlaydi.
-// Yangi versiya chiqarganda CACHE_VERSION ni o'zgartiring — eski kesh tozalanadi.
+// Fayllar avval tarmoqdan olinadi, shuning uchun yangilanishlar darhol ko'rinadi.
+// CACHE_VERSION faqat eski keshni tozalash uchun ishlatiladi.
 const CACHE_VERSION = 'v1';
 const CACHE_NAME = `xarajat-${CACHE_VERSION}`;
 
@@ -44,18 +45,17 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
   if (new URL(request.url).origin !== self.location.origin) return;
 
+  // Avval tarmoqdan olinadi, shuning uchun yangi kod darhol ko'rinadi.
+  // Internet bo'lmasa keshdagi nusxa ishlatiladi.
   event.respondWith(
-    caches.match(request, { ignoreSearch: true }).then((cached) => {
-      if (cached) return cached;
-      return fetch(request)
-        .then((response) => {
-          if (response.ok) {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        })
-        .catch(() => caches.match('./index.html'));
-    }),
+    fetch(request)
+      .then((response) => {
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        }
+        return response;
+      })
+      .catch(() => caches.match(request, { ignoreSearch: true }).then((cached) => cached ?? caches.match('./index.html'))),
   );
 });
